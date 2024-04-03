@@ -70,7 +70,7 @@ public class PlayerWeapon : MonoBehaviour
         Vector3 shootingDirection = CalculateDirectionAndSpread().normalized;
 
         // Instantiate the bullet
-        GameObject bullet = Instantiate(bulletPrefab, bulletSpawn.position, Quaternion.Euler(90, 0, 0));
+        GameObject bullet = Instantiate(bulletPrefab, bulletSpawn.position, Quaternion.identity);
         
         // Pointing the bullet to face the shooting direction
         bullet.transform.forward = shootingDirection;
