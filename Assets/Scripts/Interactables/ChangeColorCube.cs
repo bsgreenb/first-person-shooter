@@ -10,7 +10,7 @@ public class ChangeColorCube : Interactable
     void Start()
     {
         mesh = GetComponent<MeshRenderer>();
-        mesh.material.color = colorIndex.red;
+        mesh.material.color = Color.red;
     }
 
     protected override void Interact()

@@ -7,8 +7,9 @@ public class AnimateCube : Interactable
 
     void Start()
     {
-        animator = GetComponent<Animator>();
-        startMessage = promptMessage;
+        // TODO: fix  " error CS0103: The name 'startMessage' does not exist in the current context"
+        // animator = GetComponent<Animator>();
+        // startMessage = promptMessage;
     }
 
     void Update()

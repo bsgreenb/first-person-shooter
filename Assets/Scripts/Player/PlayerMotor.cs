@@ -7,12 +7,14 @@ public class PlayerMotor : MonoBehaviour
     private CharacterController controller;
     private Vector3 playerVelocity;
     private bool isGrounded;
+    bool isMoving;
+    private Vector3 lastPosition = new Vector3(0f,0f,0f);
     private bool lerpCrouch = false;
     private bool crouching = false;
     
     public float crouchTimer;
 
-    private bool sprinting = false;
+    private bool sprinting;
     public float speed = 5f;
     public float gravity = -9.8f;
     public float jumpHeight = 3f;
@@ -55,6 +57,12 @@ public class PlayerMotor : MonoBehaviour
             playerVelocity.y = -2f;
         }
         controller.Move(playerVelocity * Time.deltaTime);
+        if (lastPosition != gameObject.transform.position && isGrounded == true) {
+            isMoving = true;
+        } else {
+            isMoving = false;
+        }
+        lastPosition = gameObject.transform.position;
     }
 
     public void Jump() 
