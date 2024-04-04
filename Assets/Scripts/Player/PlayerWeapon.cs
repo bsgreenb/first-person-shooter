@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class PlayerWeapon : MonoBehaviour
 {
-    public Camera playerCamera;
-
     //Shooting
     public bool isShooting, readyToShoot;
     bool allowReset = true;
@@ -102,7 +100,7 @@ public class PlayerWeapon : MonoBehaviour
     // We use this code to help insure the bullet goes from the bullet spawn to the target at center of screen.
     public Vector3 CalculateDirectionAndSpread()
     {
-        Ray ray = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         RaycastHit hit;
 
         Vector3 targetPoint;

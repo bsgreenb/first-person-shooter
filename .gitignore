@@ -55,3 +55,6 @@ Desktop.ini
 *.apk
 *.aab
 *.unitypackage
+
+# Recordings
+Recordings/
