@@ -10,7 +10,6 @@ public class InputManager : MonoBehaviour
 
     private PlayerMotor motor;
     private PlayerLook look;
-    private PlayerWeapon weapon;
 
     // Start is called before the first frame update
     void Awake()
@@ -20,7 +19,6 @@ public class InputManager : MonoBehaviour
         motor = GetComponent<PlayerMotor>();
         
         look = GetComponent<PlayerLook>();
-        weapon = GetComponent<PlayerWeapon>();
         
         onFoot.Jump.performed += ctx => motor.Jump(); 
         onFoot.Crouch.performed += ctx => motor.Crouch();
@@ -29,9 +27,6 @@ public class InputManager : MonoBehaviour
         onFoot.Sprint.started += ctx => motor.StartSprinting();
         // Stop sprinting when Shift is released
         onFoot.Sprint.canceled += ctx => motor.StopSprinting();
-
-        onFoot.Shoot.performed += ctx => weapon.StartShooting();
-        onFoot.Shoot.canceled += _ => weapon.StopShooting();
     }
 
     // Update is called once per frame

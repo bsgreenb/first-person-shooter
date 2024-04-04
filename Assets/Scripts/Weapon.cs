@@ -2,9 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class PlayerWeapon : MonoBehaviour
+public class Weapon : MonoBehaviour
 {
+    // Input
+    private PlayerInput playerInput;
+    public PlayerInput.OnFootActions onFoot;
+
     //Shooting
     public bool isShooting, readyToShoot;
     bool allowReset = true;
@@ -23,6 +28,12 @@ public class PlayerWeapon : MonoBehaviour
     public float bulletVelocity = 20f;
     public float bulletPrefabLifeTime = 3f;
 
+    // Muzzle effect
+    public GameObject muzzleEffect;
+    
+    // Recoil etc. animation
+    private Animator animator;
+
     public enum ShootingMode
     {
         Single,
@@ -32,10 +43,28 @@ public class PlayerWeapon : MonoBehaviour
 
     public ShootingMode currentShootingMode;
 
-    private void Awake()
+    void Awake()
     {
+        playerInput = new PlayerInput();
+        onFoot = playerInput.OnFoot;
+
+        onFoot.Shoot.performed += ctx => StartShooting();
+        onFoot.Shoot.canceled += ctx => StopShooting();
+
         readyToShoot = true;
         burstBulletsLeft = bulletsPerBurst;
+
+        animator = GetComponent<Animator>();
+    }
+
+    private void OnEnable() 
+    {
+        onFoot.Enable();
+    }
+
+    private void OnDisable()
+    {
+        onFoot.Disable();
     }
 
     void Update()
@@ -63,6 +92,11 @@ public class PlayerWeapon : MonoBehaviour
 
     private void FireWeapon()
     {
+        muzzleEffect.GetComponent<ParticleSystem>().Play();
+        animator.SetTrigger("RECOIL");
+
+        SoundManager.Instance.shootingSound1911.Play();
+
         readyToShoot = false;
 
         Vector3 shootingDirection = CalculateDirectionAndSpread().normalized;
