@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -34,6 +35,11 @@ public class Weapon : MonoBehaviour
     // Recoil etc. animation
     private Animator animator;
 
+    // Re-loading
+    public float reloadTime;
+    public int magazineSize, bulletsLeft;
+    public bool isReloading = false;
+
     public enum ShootingMode
     {
         Single,
@@ -51,10 +57,14 @@ public class Weapon : MonoBehaviour
         onFoot.Shoot.performed += ctx => StartShooting();
         onFoot.Shoot.canceled += ctx => StopShooting();
 
+        onFoot.Reload.performed += ctx => ManualReload();
+
         readyToShoot = true;
         burstBulletsLeft = bulletsPerBurst;
 
         animator = GetComponent<Animator>();
+
+        bulletsLeft = magazineSize;
     }
 
     private void OnEnable() 
@@ -69,9 +79,22 @@ public class Weapon : MonoBehaviour
 
     void Update()
     {
-        if (readyToShoot && isShooting) {
+        if (bulletsLeft == 0 && isShooting) {
+            SoundManager.Instance.emptyMagazineSound1911.Play();
+        }
+
+        // Automatic reload when magazine is empty
+        // if (readyToShoot && !isShooting && !isReloading && bulletsLeft <=0) {
+        //     Reload();
+        // }
+
+        if (readyToShoot && isShooting && bulletsLeft > 0) {
             burstBulletsLeft = bulletsPerBurst;
             FireWeapon();
+        }
+
+        if (AmmoManager.Instance.ammoDisplay != null) {
+            AmmoManager.Instance.ammoDisplay.text = $"{bulletsLeft/bulletsPerBurst}/{magazineSize/bulletsPerBurst}";
         }
     }
 
@@ -92,6 +115,8 @@ public class Weapon : MonoBehaviour
 
     private void FireWeapon()
     {
+        bulletsLeft--;
+
         muzzleEffect.GetComponent<ParticleSystem>().Play();
         animator.SetTrigger("RECOIL");
 
@@ -123,6 +148,28 @@ public class Weapon : MonoBehaviour
             burstBulletsLeft--;
             Invoke(nameof(FireWeapon), shootingDelay);
         }
+    }
+
+    private void ManualReload()
+    {
+        if (bulletsLeft < magazineSize && !isReloading)
+        {
+            Reload();
+        }
+    }
+
+    private void Reload()
+    {
+        SoundManager.Instance.reloadingSound1911.Play();
+
+        isReloading = true;
+        Invoke(nameof(ReloadCompleted), reloadTime);
+    }
+
+    private void ReloadCompleted()
+    {
+        bulletsLeft = magazineSize;
+        isReloading = false;
     }
 
     private void ResetShot() 
