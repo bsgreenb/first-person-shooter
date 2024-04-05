@@ -7,6 +7,8 @@ using UnityEngine.InputSystem;
 
 public class Weapon : MonoBehaviour
 {
+    public bool isActiveWeapon;
+
     // Input
     private PlayerInput playerInput;
     public PlayerInput.OnFootActions onFoot;
@@ -33,12 +35,21 @@ public class Weapon : MonoBehaviour
     public GameObject muzzleEffect;
     
     // Recoil etc. animation
-    private Animator animator;
+    internal Animator animator;
 
     // Re-loading
     public float reloadTime;
     public int magazineSize, bulletsLeft;
     public bool isReloading = false;
+
+    // Spawn position
+    public Vector3 spawnPosition;
+    public Vector3 spawnRotation;
+
+    // Adjustments for resting position
+    public Vector3 restingPositionOffset;
+    public Vector3 restingRotationOffset;
+
 
     public enum WeaponModel
     {
@@ -87,38 +98,39 @@ public class Weapon : MonoBehaviour
 
     void Update()
     {
-        if (bulletsLeft == 0 && isShooting) {
-            SoundManager.Instance.emptyMagazineSound1911.Play();
-        }
+        if (isActiveWeapon) {
+            if (bulletsLeft == 0 && isShooting) {
+                SoundManager.Instance.emptyMagazineSound1911.Play();
+            }
 
-        // Automatic reload when magazine is empty
-        // if (readyToShoot && !isShooting && !isReloading && bulletsLeft <=0) {
-        //     Reload();
-        // }
+            // Automatic reload when magazine is empty
+            // if (readyToShoot && !isShooting && !isReloading && bulletsLeft <=0) {
+            //     Reload();
+            // }
 
-        if (readyToShoot && isShooting && bulletsLeft > 0) {
-            burstBulletsLeft = bulletsPerBurst;
-            FireWeapon();
-        }
+            if (readyToShoot && isShooting && bulletsLeft > 0) {
+                burstBulletsLeft = bulletsPerBurst;
+                FireWeapon();
+            }
 
-        if (AmmoManager.Instance.ammoDisplay != null) {
-            AmmoManager.Instance.ammoDisplay.text = $"{bulletsLeft/bulletsPerBurst}/{magazineSize/bulletsPerBurst}";
+            if (AmmoManager.Instance.ammoDisplay != null) {
+                AmmoManager.Instance.ammoDisplay.text = $"{bulletsLeft/bulletsPerBurst}/{magazineSize/bulletsPerBurst}";
+            }
         }
     }
 
 
     public void StartShooting() 
     {
-        isShooting = true;
-        if (currentShootingMode == ShootingMode.Auto) {
-            Debug.Log("Start Automatic Shooting");
-        } else {
-            Debug.Log("Single Shot");
+        if (isActiveWeapon) {
+            isShooting = true;
         }
     }
     public void StopShooting()
     {
-        isShooting = false;
+        if (isActiveWeapon) {
+            isShooting = false;
+        }
     }
 
     private void FireWeapon()
@@ -160,7 +172,7 @@ public class Weapon : MonoBehaviour
 
     private void ManualReload()
     {
-        if (bulletsLeft < magazineSize && !isReloading)
+        if (isActiveWeapon && (bulletsLeft < magazineSize && !isReloading))
         {
             Reload();
         }

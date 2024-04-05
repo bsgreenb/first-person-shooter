@@ -98,6 +98,51 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Weapon1"",
+                    ""type"": ""Button"",
+                    ""id"": ""358e9e9e-98a5-4f3a-8bd9-1ff7dc1ec83e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Weapon2"",
+                    ""type"": ""Button"",
+                    ""id"": ""376c71d8-8612-4ead-9ca7-4b9d77343545"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""WeaponRotateNext"",
+                    ""type"": ""Button"",
+                    ""id"": ""76a743b9-435f-4bb0-a42e-4028633c0f63"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""WeaponRotatePrevious"",
+                    ""type"": ""Button"",
+                    ""id"": ""e3555a82-7eac-41cf-977b-2a0a9db1eb4d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""WeaponRotate"",
+                    ""type"": ""Value"",
+                    ""id"": ""87ea108e-98d4-4738-8f5e-70021273377b"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -362,6 +407,61 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Reload"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""27155ddf-36b2-4fb6-9970-3abb99ebab0c"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Weapon1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1f2598ee-3995-4338-908b-66d4fe728646"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Weapon2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9c987841-57a6-42ff-a64f-2fa87e01701a"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""WeaponRotateNext"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""559bdee6-3467-40f4-afc7-e87789c229c6"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""WeaponRotatePrevious"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""34f764af-076f-4fd4-b6f6-94a16da708d0"",
+                    ""path"": ""<Mouse>/scroll"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""WeaponRotate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -924,6 +1024,11 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_OnFoot_Interact = m_OnFoot.FindAction("Interact", throwIfNotFound: true);
         m_OnFoot_Shoot = m_OnFoot.FindAction("Shoot", throwIfNotFound: true);
         m_OnFoot_Reload = m_OnFoot.FindAction("Reload", throwIfNotFound: true);
+        m_OnFoot_Weapon1 = m_OnFoot.FindAction("Weapon1", throwIfNotFound: true);
+        m_OnFoot_Weapon2 = m_OnFoot.FindAction("Weapon2", throwIfNotFound: true);
+        m_OnFoot_WeaponRotateNext = m_OnFoot.FindAction("WeaponRotateNext", throwIfNotFound: true);
+        m_OnFoot_WeaponRotatePrevious = m_OnFoot.FindAction("WeaponRotatePrevious", throwIfNotFound: true);
+        m_OnFoot_WeaponRotate = m_OnFoot.FindAction("WeaponRotate", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1008,6 +1113,11 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_OnFoot_Interact;
     private readonly InputAction m_OnFoot_Shoot;
     private readonly InputAction m_OnFoot_Reload;
+    private readonly InputAction m_OnFoot_Weapon1;
+    private readonly InputAction m_OnFoot_Weapon2;
+    private readonly InputAction m_OnFoot_WeaponRotateNext;
+    private readonly InputAction m_OnFoot_WeaponRotatePrevious;
+    private readonly InputAction m_OnFoot_WeaponRotate;
     public struct OnFootActions
     {
         private @PlayerInput m_Wrapper;
@@ -1020,6 +1130,11 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @Interact => m_Wrapper.m_OnFoot_Interact;
         public InputAction @Shoot => m_Wrapper.m_OnFoot_Shoot;
         public InputAction @Reload => m_Wrapper.m_OnFoot_Reload;
+        public InputAction @Weapon1 => m_Wrapper.m_OnFoot_Weapon1;
+        public InputAction @Weapon2 => m_Wrapper.m_OnFoot_Weapon2;
+        public InputAction @WeaponRotateNext => m_Wrapper.m_OnFoot_WeaponRotateNext;
+        public InputAction @WeaponRotatePrevious => m_Wrapper.m_OnFoot_WeaponRotatePrevious;
+        public InputAction @WeaponRotate => m_Wrapper.m_OnFoot_WeaponRotate;
         public InputActionMap Get() { return m_Wrapper.m_OnFoot; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1053,6 +1168,21 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Reload.started += instance.OnReload;
             @Reload.performed += instance.OnReload;
             @Reload.canceled += instance.OnReload;
+            @Weapon1.started += instance.OnWeapon1;
+            @Weapon1.performed += instance.OnWeapon1;
+            @Weapon1.canceled += instance.OnWeapon1;
+            @Weapon2.started += instance.OnWeapon2;
+            @Weapon2.performed += instance.OnWeapon2;
+            @Weapon2.canceled += instance.OnWeapon2;
+            @WeaponRotateNext.started += instance.OnWeaponRotateNext;
+            @WeaponRotateNext.performed += instance.OnWeaponRotateNext;
+            @WeaponRotateNext.canceled += instance.OnWeaponRotateNext;
+            @WeaponRotatePrevious.started += instance.OnWeaponRotatePrevious;
+            @WeaponRotatePrevious.performed += instance.OnWeaponRotatePrevious;
+            @WeaponRotatePrevious.canceled += instance.OnWeaponRotatePrevious;
+            @WeaponRotate.started += instance.OnWeaponRotate;
+            @WeaponRotate.performed += instance.OnWeaponRotate;
+            @WeaponRotate.canceled += instance.OnWeaponRotate;
         }
 
         private void UnregisterCallbacks(IOnFootActions instance)
@@ -1081,6 +1211,21 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Reload.started -= instance.OnReload;
             @Reload.performed -= instance.OnReload;
             @Reload.canceled -= instance.OnReload;
+            @Weapon1.started -= instance.OnWeapon1;
+            @Weapon1.performed -= instance.OnWeapon1;
+            @Weapon1.canceled -= instance.OnWeapon1;
+            @Weapon2.started -= instance.OnWeapon2;
+            @Weapon2.performed -= instance.OnWeapon2;
+            @Weapon2.canceled -= instance.OnWeapon2;
+            @WeaponRotateNext.started -= instance.OnWeaponRotateNext;
+            @WeaponRotateNext.performed -= instance.OnWeaponRotateNext;
+            @WeaponRotateNext.canceled -= instance.OnWeaponRotateNext;
+            @WeaponRotatePrevious.started -= instance.OnWeaponRotatePrevious;
+            @WeaponRotatePrevious.performed -= instance.OnWeaponRotatePrevious;
+            @WeaponRotatePrevious.canceled -= instance.OnWeaponRotatePrevious;
+            @WeaponRotate.started -= instance.OnWeaponRotate;
+            @WeaponRotate.performed -= instance.OnWeaponRotate;
+            @WeaponRotate.canceled -= instance.OnWeaponRotate;
         }
 
         public void RemoveCallbacks(IOnFootActions instance)
@@ -1272,6 +1417,11 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnInteract(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);
+        void OnWeapon1(InputAction.CallbackContext context);
+        void OnWeapon2(InputAction.CallbackContext context);
+        void OnWeaponRotateNext(InputAction.CallbackContext context);
+        void OnWeaponRotatePrevious(InputAction.CallbackContext context);
+        void OnWeaponRotate(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
