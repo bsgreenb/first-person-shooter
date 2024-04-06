@@ -143,6 +143,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""ADS"",
+                    ""type"": ""Button"",
+                    ""id"": ""59637a7f-4fd6-4313-91f6-d0a735f749ff"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -462,6 +471,28 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""WeaponRotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9fa586e4-b54c-40d1-ac07-bade229de04a"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ADS"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b38aeec9-d067-4bf3-b7f5-4b053361646b"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ADS"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1029,6 +1060,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_OnFoot_WeaponRotateNext = m_OnFoot.FindAction("WeaponRotateNext", throwIfNotFound: true);
         m_OnFoot_WeaponRotatePrevious = m_OnFoot.FindAction("WeaponRotatePrevious", throwIfNotFound: true);
         m_OnFoot_WeaponRotate = m_OnFoot.FindAction("WeaponRotate", throwIfNotFound: true);
+        m_OnFoot_ADS = m_OnFoot.FindAction("ADS", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1118,6 +1150,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_OnFoot_WeaponRotateNext;
     private readonly InputAction m_OnFoot_WeaponRotatePrevious;
     private readonly InputAction m_OnFoot_WeaponRotate;
+    private readonly InputAction m_OnFoot_ADS;
     public struct OnFootActions
     {
         private @PlayerInput m_Wrapper;
@@ -1135,6 +1168,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @WeaponRotateNext => m_Wrapper.m_OnFoot_WeaponRotateNext;
         public InputAction @WeaponRotatePrevious => m_Wrapper.m_OnFoot_WeaponRotatePrevious;
         public InputAction @WeaponRotate => m_Wrapper.m_OnFoot_WeaponRotate;
+        public InputAction @ADS => m_Wrapper.m_OnFoot_ADS;
         public InputActionMap Get() { return m_Wrapper.m_OnFoot; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1183,6 +1217,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @WeaponRotate.started += instance.OnWeaponRotate;
             @WeaponRotate.performed += instance.OnWeaponRotate;
             @WeaponRotate.canceled += instance.OnWeaponRotate;
+            @ADS.started += instance.OnADS;
+            @ADS.performed += instance.OnADS;
+            @ADS.canceled += instance.OnADS;
         }
 
         private void UnregisterCallbacks(IOnFootActions instance)
@@ -1226,6 +1263,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @WeaponRotate.started -= instance.OnWeaponRotate;
             @WeaponRotate.performed -= instance.OnWeaponRotate;
             @WeaponRotate.canceled -= instance.OnWeaponRotate;
+            @ADS.started -= instance.OnADS;
+            @ADS.performed -= instance.OnADS;
+            @ADS.canceled -= instance.OnADS;
         }
 
         public void RemoveCallbacks(IOnFootActions instance)
@@ -1422,6 +1462,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnWeaponRotateNext(InputAction.CallbackContext context);
         void OnWeaponRotatePrevious(InputAction.CallbackContext context);
         void OnWeaponRotate(InputAction.CallbackContext context);
+        void OnADS(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

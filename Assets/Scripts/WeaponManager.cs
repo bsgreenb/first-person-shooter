@@ -92,6 +92,7 @@ public class WeaponManager : MonoBehaviour
         weapon.GetComponent<Outline>().enabled = false;
         weapon.enabled = true;
         weapon.animator.enabled = true;
+        weapon.GetComponent<BoxCollider>().enabled = false;
     }
 
     internal void PickupAmmo(AmmoBox ammo)
@@ -115,6 +116,7 @@ public class WeaponManager : MonoBehaviour
             weaponToDrop.GetComponent<Weapon>().isActiveWeapon = false;
             weaponToDrop.GetComponent<Weapon>().enabled = false;
             weaponToDrop.GetComponent<Weapon>().animator.enabled = false;
+            weaponToDrop.GetComponent<BoxCollider>().enabled = true;
 
             weaponToDrop.transform.SetParent(pickedupWeapon.transform.parent);
 

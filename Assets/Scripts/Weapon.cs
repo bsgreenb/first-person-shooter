@@ -14,19 +14,21 @@ public class Weapon : MonoBehaviour
     private PlayerInput playerInput;
     public PlayerInput.OnFootActions onFoot;
 
-    //Shooting
+    [Header("Shooting")]
     public bool isShooting, readyToShoot;
     bool allowReset = true;
     public float shootingDelay = 2f;
 
-    // Burst mode
+    [Header("Burst")]
     public int bulletsPerBurst = 3;
     public int burstBulletsLeft;
 
-    // Spread
+    [Header("Spread")]
     public float spreadIntensity;
+    public float hipSpreadIntensity;
+    public float adsSpreadIntensity;
 
-    // Bullet
+    [Header("Bullet")]
     public GameObject bulletPrefab;
     public Transform bulletSpawn;
     public float bulletVelocity = 20f;
@@ -38,7 +40,7 @@ public class Weapon : MonoBehaviour
     // Recoil etc. animation
     internal Animator animator;
 
-    // Re-loading
+    [Header("Loading")]
     public float reloadTime;
     public int magazineSize, bulletsLeft;
     public bool isReloading = false;
@@ -46,6 +48,8 @@ public class Weapon : MonoBehaviour
     // Spawn position
     public Vector3 spawnPosition;
     public Vector3 spawnRotation;
+
+    bool isADS;
 
     // Adjustments for resting position
     public Vector3 restingPositionOffset;
@@ -79,12 +83,17 @@ public class Weapon : MonoBehaviour
 
         onFoot.Reload.performed += ctx => ManualReload();
 
+        onFoot.ADS.started += ctx => StartADS();
+        onFoot.ADS.canceled += ctx => StopADS();
+
         readyToShoot = true;
         burstBulletsLeft = bulletsPerBurst;
 
         animator = GetComponent<Animator>();
 
         bulletsLeft = magazineSize;
+
+        spreadIntensity = hipSpreadIntensity;
     }
 
     private void OnEnable() 
@@ -100,6 +109,7 @@ public class Weapon : MonoBehaviour
     void Update()
     {
         if (isActiveWeapon) {
+
             GetComponent<Outline>().enabled = false; // avoids a potential bug with remaining outline.
             if (bulletsLeft == 0 && isShooting) {
                 SoundManager.Instance.emptyMagazineSound1911.Play();
@@ -131,12 +141,36 @@ public class Weapon : MonoBehaviour
         }
     }
 
+    public void StartADS()
+    {
+        if (isActiveWeapon) {
+            animator.SetBool("isADS", true);
+            isADS = true;
+            HUDManager.Instance.middleDot.SetActive(false);
+            spreadIntensity = adsSpreadIntensity;
+        }
+    }
+
+    public void StopADS()
+    {
+        if (isActiveWeapon) {
+            animator.SetBool("isADS", false);
+            isADS = false;
+            HUDManager.Instance.middleDot.SetActive(true);
+            spreadIntensity = hipSpreadIntensity;
+        }
+    }
+
     private void FireWeapon()
     {
         bulletsLeft--;
 
         muzzleEffect.GetComponent<ParticleSystem>().Play();
-        animator.SetTrigger("RECOIL");
+        if (isADS) {
+            animator.SetTrigger("RECOIL_ADS");
+        } else {
+            animator.SetTrigger("RECOIL");
+        }
 
         SoundManager.Instance.PlayShootingSound(thisWeaponModel);
 
