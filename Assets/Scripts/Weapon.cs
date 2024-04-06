@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -169,7 +170,7 @@ public class Weapon : MonoBehaviour
 
     private void ManualReload()
     {
-        if (isActiveWeapon && (bulletsLeft < magazineSize && !isReloading))
+        if (isActiveWeapon && bulletsLeft < magazineSize && !isReloading && WeaponManager.Instance.CheckAmmoLeftFor(thisWeaponModel) > 0)
         {
             Reload();
         }
@@ -187,7 +188,12 @@ public class Weapon : MonoBehaviour
 
     private void ReloadCompleted()
     {
-        bulletsLeft = magazineSize;
+        if (WeaponManager.Instance.CheckAmmoLeftFor(thisWeaponModel) > magazineSize) {
+            bulletsLeft = magazineSize;
+        } else {
+            bulletsLeft = WeaponManager.Instance.CheckAmmoLeftFor(thisWeaponModel);
+        }
+        WeaponManager.Instance.DecreaseTotalAmmo(bulletsLeft, thisWeaponModel);
         isReloading = false;
     }
 

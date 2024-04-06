@@ -45,7 +45,7 @@ public class HUDManager : MonoBehaviour
 
         if (activeWeapon) {
             magazineAmmoUI.text = $"{activeWeapon.bulletsLeft / activeWeapon.bulletsPerBurst}";
-            totalAmmoUI.text = $"{activeWeapon.magazineSize / activeWeapon.bulletsPerBurst}";
+            totalAmmoUI.text = $"{WeaponManager.Instance.CheckAmmoLeftFor(activeWeapon.thisWeaponModel)}";
 
             Weapon.WeaponModel model = activeWeapon.thisWeaponModel;
             ammoTypeUI.sprite = GetAmmoSprite(model);
@@ -71,9 +71,9 @@ public class HUDManager : MonoBehaviour
         switch (model)
         {
             case Weapon.WeaponModel.Pistol1911:
-                return Instantiate(Resources.Load<GameObject>("Pistol1911_Weapon")).GetComponent<SpriteRenderer>().sprite;
+                return Resources.Load<GameObject>("Pistol1911_Weapon").GetComponent<SpriteRenderer>().sprite;
             case Weapon.WeaponModel.M4:
-                return Instantiate(Resources.Load<GameObject>("M4_Weapon")).GetComponent<SpriteRenderer>().sprite;
+                return Resources.Load<GameObject>("M4_Weapon").GetComponent<SpriteRenderer>().sprite;
             default:
                 return null;
         }
@@ -84,9 +84,9 @@ public class HUDManager : MonoBehaviour
         switch (model)
         {
             case Weapon.WeaponModel.Pistol1911:
-                return Instantiate(Resources.Load<GameObject>("Pistol_Ammo")).GetComponent<SpriteRenderer>().sprite;
+                return Resources.Load<GameObject>("Pistol_Ammo").GetComponent<SpriteRenderer>().sprite;
             case Weapon.WeaponModel.M4:
-                return Instantiate(Resources.Load<GameObject>("Rifle_Ammo")).GetComponent<SpriteRenderer>().sprite;
+                return Resources.Load<GameObject>("Rifle_Ammo").GetComponent<SpriteRenderer>().sprite;
             default:
                 return null;
         }

@@ -8,6 +8,7 @@ public class InteractionManager : MonoBehaviour
     public static InteractionManager Instance {get; set;}
 
     public Weapon hoveredWeapon = null;
+    public AmmoBox hoveredAmmoBox = null;
     private PlayerInput playerInput;
     public PlayerInput.OnFootActions onFoot;
 
@@ -64,6 +65,22 @@ public class InteractionManager : MonoBehaviour
             else if (hoveredWeapon) {
                 hoveredWeapon.GetComponent<Outline>().enabled = false;
                 hoveredWeapon = null;
+            }
+
+            // AmmoBox
+            // TODO: need to handle the multi-select situation for this too
+            
+            if (objectHitByRaycast.GetComponent<AmmoBox>()) {
+                hoveredAmmoBox = objectHitByRaycast.GetComponent<AmmoBox>();
+                hoveredAmmoBox.GetComponent<Outline>().enabled = true;
+
+                if (onFoot.Interact.triggered) {
+                    WeaponManager.Instance.PickupAmmo(hoveredAmmoBox);
+                    Destroy(objectHitByRaycast);
+                }
+            }
+            else if (hoveredAmmoBox) {
+                hoveredAmmoBox.GetComponent<Outline>().enabled = false;
             }
         }
     }
