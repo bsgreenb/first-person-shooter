@@ -2623,12 +2623,16 @@ PrefabInstance:
       value: M4
       objectReference: {fileID: 0}
     - target: {fileID: 5980029875564201506, guid: 780d8bd46e5b946e48858e6770132123, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5980029875564201506, guid: 780d8bd46e5b946e48858e6770132123, type: 3}
       propertyPath: m_LocalPosition.x
       value: -5.275085
       objectReference: {fileID: 0}
     - target: {fileID: 5980029875564201506, guid: 780d8bd46e5b946e48858e6770132123, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.471
+      value: -0.47099996
       objectReference: {fileID: 0}
     - target: {fileID: 5980029875564201506, guid: 780d8bd46e5b946e48858e6770132123, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2648,7 +2652,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5980029875564201506, guid: 780d8bd46e5b946e48858e6770132123, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 5980029875564201506, guid: 780d8bd46e5b946e48858e6770132123, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -12332,25 +12336,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 41746420}
     m_Modifications:
-    - target: {fileID: 3609868611170328201, guid: 74e9eba1a7d6845d0ba346ae423c2be1, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5597719849225660768, guid: 74e9eba1a7d6845d0ba346ae423c2be1, type: 3}
       propertyPath: m_Name
       value: M1911
-      objectReference: {fileID: 0}
-    - target: {fileID: 5978346303460183518, guid: 74e9eba1a7d6845d0ba346ae423c2be1, type: 3}
-      propertyPath: spreadIntensity
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5978346303460183518, guid: 74e9eba1a7d6845d0ba346ae423c2be1, type: 3}
-      propertyPath: adsSpreadIntensity
-      value: 0.04
-      objectReference: {fileID: 0}
-    - target: {fileID: 5978346303460183518, guid: 74e9eba1a7d6845d0ba346ae423c2be1, type: 3}
-      propertyPath: hipSpreadIntensity
-      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 6407541625495055719, guid: 74e9eba1a7d6845d0ba346ae423c2be1, type: 3}
       propertyPath: m_LocalPosition.x
