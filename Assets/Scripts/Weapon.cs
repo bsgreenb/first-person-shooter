@@ -99,6 +99,7 @@ public class Weapon : MonoBehaviour
     void Update()
     {
         if (isActiveWeapon) {
+            GetComponent<Outline>().enabled = false; // avoids a potential bug with remaining outline.
             if (bulletsLeft == 0 && isShooting) {
                 SoundManager.Instance.emptyMagazineSound1911.Play();
             }
@@ -111,10 +112,6 @@ public class Weapon : MonoBehaviour
             if (readyToShoot && isShooting && bulletsLeft > 0) {
                 burstBulletsLeft = bulletsPerBurst;
                 FireWeapon();
-            }
-
-            if (AmmoManager.Instance.ammoDisplay != null) {
-                AmmoManager.Instance.ammoDisplay.text = $"{bulletsLeft/bulletsPerBurst}/{magazineSize/bulletsPerBurst}";
             }
         }
     }

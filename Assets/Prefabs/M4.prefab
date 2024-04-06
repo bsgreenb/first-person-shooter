@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1894079240256308078}
   - component: {fileID: 7249691887257593282}
   - component: {fileID: 3884011037416948372}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Rear_Sight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8226749820830004335}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BulletSpawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 2321697448230245123}
   - component: {fileID: 3470151526618890561}
   - component: {fileID: 7395154893754478637}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -213,7 +213,7 @@ GameObject:
   - component: {fileID: 4563089421209407454}
   - component: {fileID: 6635072512554169702}
   - component: {fileID: 1369939311361887198}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: M4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -321,7 +321,8 @@ MonoBehaviour:
   isReloading: 0
   spawnPosition: {x: -5.18, y: -0.475, z: 1.91}
   spawnRotation: {x: 0, y: 180, z: -90}
-  restingRotation: {x: 180, y: 0, z: 90}
+  restingPositionOffset: {x: 0, y: 0, z: 0}
+  restingRotationOffset: {x: 0, y: 0, z: 0}
   thisWeaponModel: 1
   currentShootingMode: 2
 --- !u!95 &4563089421209407454
@@ -395,7 +396,7 @@ GameObject:
   - component: {fileID: 3277150642709084457}
   - component: {fileID: 7535463031942556979}
   - component: {fileID: 1062461768886270166}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: MuzzleFlashEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5178,7 +5179,7 @@ GameObject:
   - component: {fileID: 4700835421935117935}
   - component: {fileID: 1699841861773162125}
   - component: {fileID: 7893935755001237566}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Bolt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5261,7 +5262,7 @@ GameObject:
   - component: {fileID: 391378311556709659}
   - component: {fileID: 6277941221144724574}
   - component: {fileID: 2387383107642755219}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5344,7 +5345,7 @@ GameObject:
   - component: {fileID: 4564931166164649984}
   - component: {fileID: 2161160247561793563}
   - component: {fileID: 761547804420611179}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Mag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
