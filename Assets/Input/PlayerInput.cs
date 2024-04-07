@@ -152,6 +152,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Throw"",
+                    ""type"": ""Button"",
+                    ""id"": ""fb5faf51-e4a6-4efd-a187-a41871cd9073"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -493,6 +502,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""ADS"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""eb1eb208-98fe-45ce-bc71-743f1b17816b"",
+                    ""path"": ""<Keyboard>/g"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Throw"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1061,6 +1081,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_OnFoot_WeaponRotatePrevious = m_OnFoot.FindAction("WeaponRotatePrevious", throwIfNotFound: true);
         m_OnFoot_WeaponRotate = m_OnFoot.FindAction("WeaponRotate", throwIfNotFound: true);
         m_OnFoot_ADS = m_OnFoot.FindAction("ADS", throwIfNotFound: true);
+        m_OnFoot_Throw = m_OnFoot.FindAction("Throw", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1151,6 +1172,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_OnFoot_WeaponRotatePrevious;
     private readonly InputAction m_OnFoot_WeaponRotate;
     private readonly InputAction m_OnFoot_ADS;
+    private readonly InputAction m_OnFoot_Throw;
     public struct OnFootActions
     {
         private @PlayerInput m_Wrapper;
@@ -1169,6 +1191,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @WeaponRotatePrevious => m_Wrapper.m_OnFoot_WeaponRotatePrevious;
         public InputAction @WeaponRotate => m_Wrapper.m_OnFoot_WeaponRotate;
         public InputAction @ADS => m_Wrapper.m_OnFoot_ADS;
+        public InputAction @Throw => m_Wrapper.m_OnFoot_Throw;
         public InputActionMap Get() { return m_Wrapper.m_OnFoot; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1220,6 +1243,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @ADS.started += instance.OnADS;
             @ADS.performed += instance.OnADS;
             @ADS.canceled += instance.OnADS;
+            @Throw.started += instance.OnThrow;
+            @Throw.performed += instance.OnThrow;
+            @Throw.canceled += instance.OnThrow;
         }
 
         private void UnregisterCallbacks(IOnFootActions instance)
@@ -1266,6 +1292,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @ADS.started -= instance.OnADS;
             @ADS.performed -= instance.OnADS;
             @ADS.canceled -= instance.OnADS;
+            @Throw.started -= instance.OnThrow;
+            @Throw.performed -= instance.OnThrow;
+            @Throw.canceled -= instance.OnThrow;
         }
 
         public void RemoveCallbacks(IOnFootActions instance)
@@ -1463,6 +1492,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnWeaponRotatePrevious(InputAction.CallbackContext context);
         void OnWeaponRotate(InputAction.CallbackContext context);
         void OnADS(InputAction.CallbackContext context);
+        void OnThrow(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

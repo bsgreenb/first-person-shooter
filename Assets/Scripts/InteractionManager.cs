@@ -9,6 +9,8 @@ public class InteractionManager : MonoBehaviour
 
     public Weapon hoveredWeapon = null;
     public AmmoBox hoveredAmmoBox = null;
+    public Throwable hoveredThrowable = null;
+    
     private PlayerInput playerInput;
     public PlayerInput.OnFootActions onFoot;
 
@@ -81,6 +83,20 @@ public class InteractionManager : MonoBehaviour
             }
             else if (hoveredAmmoBox) {
                 hoveredAmmoBox.GetComponent<Outline>().enabled = false;
+            }
+
+            // Throwable
+            if (objectHitByRaycast.GetComponent<Throwable>()) {
+                hoveredThrowable = objectHitByRaycast.GetComponent<Throwable>();
+                hoveredThrowable.GetComponent<Outline>().enabled = true;
+
+                if (onFoot.Interact.triggered) {
+                    WeaponManager.Instance.PickupThrowable(hoveredThrowable);
+                    Destroy(objectHitByRaycast);
+                }
+            }
+            else if (hoveredThrowable) {
+                hoveredThrowable.GetComponent<Outline>().enabled = false;
             }
         }
     }

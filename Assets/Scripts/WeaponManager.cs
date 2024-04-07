@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,6 +14,15 @@ public class WeaponManager : MonoBehaviour
     [Header("Ammo")]
     public int totalRifleAmmo = 0;
     public int totalPistolAmmo = 0;
+
+    [Header("Throwables")]
+    public int grenades = 0;
+    public float throwForce = 10f;
+    public GameObject grenadePrefab;
+    public GameObject throwableSpawn;
+    public float forceMultiplier = 0;
+    public float forceMultiplierLimit = 3f;
+    private bool isWindingUp = false;
 
     private PlayerInput playerInput;
     public PlayerInput.OnFootActions onFoot;
@@ -40,6 +50,9 @@ public class WeaponManager : MonoBehaviour
         onFoot.WeaponRotateNext.performed += ctx => WeaponRotateNext();
         onFoot.WeaponRotatePrevious.performed += ctx => WeaponRotatePrevious();
         onFoot.WeaponRotate.performed += ctx => WeaponRotate(ctx);
+        
+        onFoot.Throw.started += ctx => WindUpThrow();
+        onFoot.Throw.canceled += ctx => Throw();
     }
 
     private void OnEnable() 
@@ -72,12 +85,22 @@ public class WeaponManager : MonoBehaviour
         {
             scrollAccumulator = Mathf.MoveTowards(scrollAccumulator, 0, Time.deltaTime * resetSpeed);
         }
+
+        if (isWindingUp) {
+            forceMultiplier += Time.deltaTime;
+
+            if (forceMultiplier > forceMultiplierLimit) {
+                forceMultiplier = forceMultiplierLimit;
+            }
+        }   
     }
 
     public void PickupWeapon(GameObject pickedupWeapon)
     {
         AddWeaponIntoActiveSlot(pickedupWeapon);
     }
+
+
 
     private void AddWeaponIntoActiveSlot(GameObject pickedupWeapon)
     {
@@ -200,4 +223,58 @@ public class WeaponManager : MonoBehaviour
                 return 0;
         }
     }
+
+    #region || ---- Throwables ---- ||
+    public void PickupThrowable(Throwable throwable)
+    {
+        switch (throwable.throwableType)
+        {
+            case Throwable.ThrowableType.Grenade:
+                PickupGrenade();
+                break;
+        }
+    }
+
+    private void PickupGrenade()
+    {
+        grenades += 1;
+
+        HUDManager.Instance.UpdateThrowables(Throwable.ThrowableType.Grenade);
+    }
+
+    private void WindUpThrow()
+    {
+        if (grenades > 0) {
+            isWindingUp = true;
+        }
+
+    }
+
+    private void Throw()
+    {
+        isWindingUp = false;
+        if (grenades > 0) {
+            ThrowLethal();
+        }
+        
+        forceMultiplier = 0;
+    }
+
+    private void ThrowLethal()
+    {
+        GameObject lethalPrefab = grenadePrefab;
+
+        GameObject throwable = Instantiate(lethalPrefab, throwableSpawn.transform.position, Camera.main.transform.rotation);
+        Rigidbody rb = throwable.GetComponent<Rigidbody>();
+
+        rb.AddForce(Camera.main.transform.forward * (throwForce * forceMultiplier), ForceMode.Impulse);
+
+        throwable.GetComponent<Throwable>().hasBeenThrown = true;
+
+        grenades -= 1;
+        HUDManager.Instance.UpdateThrowables(Throwable.ThrowableType.Grenade);
+    }
+
+
+    #endregion
 }

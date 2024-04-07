@@ -106,4 +106,15 @@ public class HUDManager : MonoBehaviour
         //this will never happen, but we need to return something
         return null;
     }
+
+    internal void UpdateThrowables(Throwable.ThrowableType throwableType)
+    {
+        switch (throwableType) 
+        {
+            case Throwable.ThrowableType.Grenade:
+                lethalAmountUI.text = $"{WeaponManager.Instance.grenades}";
+                lethalUI.sprite = Resources.Load<GameObject>("Grenade").GetComponent<SpriteRenderer>().sprite;
+                break;
+        }
+    }
 }
