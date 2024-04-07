@@ -26,6 +26,7 @@ public class HUDManager : MonoBehaviour
     public TextMeshProUGUI tacticalAmountUI;
 
     public Sprite emptySlot;
+    public Sprite greySlot;
 
     public GameObject middleDot;
 
@@ -65,6 +66,14 @@ public class HUDManager : MonoBehaviour
 
             activeWeaponUI.sprite = emptySlot;
             unActiveWeaponUI.sprite = emptySlot;
+        }
+
+        if (WeaponManager.Instance.lethalsCount <= 0) {
+            lethalUI.sprite = greySlot;
+        }
+
+        if (WeaponManager.Instance.tacticalCount <= 0) {
+            tacticalUI.sprite = greySlot;
         }
     }
 
@@ -107,13 +116,22 @@ public class HUDManager : MonoBehaviour
         return null;
     }
 
-    internal void UpdateThrowables(Throwable.ThrowableType throwableType)
+    internal void UpdateThrowablesUI()
     {
-        switch (throwableType) 
+        lethalAmountUI.text = $"{WeaponManager.Instance.lethalsCount}";
+        tacticalAmountUI.text = $"{WeaponManager.Instance.tacticalCount}";
+
+        switch (WeaponManager.Instance.equippedLethalType)
         {
             case Throwable.ThrowableType.Grenade:
-                lethalAmountUI.text = $"{WeaponManager.Instance.grenades}";
                 lethalUI.sprite = Resources.Load<GameObject>("Grenade").GetComponent<SpriteRenderer>().sprite;
+                break;
+        }
+
+        switch (WeaponManager.Instance.equippedTacticalType)
+        {
+            case Throwable.ThrowableType.Smoke_Grenade:
+                tacticalUI.sprite = Resources.Load<GameObject>("Smoke_Grenade").GetComponent<SpriteRenderer>().sprite;
                 break;
         }
     }
