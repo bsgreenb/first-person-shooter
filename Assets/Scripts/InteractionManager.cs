@@ -51,6 +51,8 @@ public class InteractionManager : MonoBehaviour
             Weapon weaponHitByRaycast = objectHitByRaycast.GetComponent<Weapon>();
 
             if (weaponHitByRaycast && !weaponHitByRaycast.isActiveWeapon) {
+                // Dsiable the outline
+                
                 if (hoveredWeapon != weaponHitByRaycast) {
                     if (hoveredWeapon != null) {
                         hoveredWeapon.GetComponent<Outline>().enabled = false;
@@ -70,9 +72,12 @@ public class InteractionManager : MonoBehaviour
             }
 
             // AmmoBox
-            // TODO: need to handle the multi-select situation for this too
             
             if (objectHitByRaycast.GetComponent<AmmoBox>()) {
+                if (hoveredAmmoBox){
+                    hoveredAmmoBox.GetComponent<Outline>().enabled = false;
+                }
+
                 hoveredAmmoBox = objectHitByRaycast.GetComponent<AmmoBox>();
                 hoveredAmmoBox.GetComponent<Outline>().enabled = true;
 
@@ -87,6 +92,10 @@ public class InteractionManager : MonoBehaviour
 
             // Throwable
             if (objectHitByRaycast.GetComponent<Throwable>()) {
+                if (hoveredThrowable){
+                    hoveredThrowable.GetComponent<Outline>().enabled = false;
+                }
+                
                 hoveredThrowable = objectHitByRaycast.GetComponent<Throwable>();
                 hoveredThrowable.GetComponent<Outline>().enabled = true;
 
