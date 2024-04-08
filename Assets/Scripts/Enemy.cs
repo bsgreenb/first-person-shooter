@@ -34,12 +34,15 @@ public class Enemy : MonoBehaviour
         }
    }
 
-   private void Update()
+   private void OnDrawGizmos()
    {
-        if (navAgent.velocity.magnitude > 0.1f) {
-            animator.SetBool("isWalking", true);
-        } else {
-            animator.SetBool("isWalking", false);
-        }
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, 2.5f); // Attack / Stop Attacking
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, 18f); // Detection (Start Chasing)
+        
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, 21f); // Stop Chasing
    }
 }
