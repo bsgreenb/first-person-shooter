@@ -1,3 +1,5 @@
+Assets/Prefabs/Container/model/diffuse.psd filter=lfs diff=lfs merge=lfs -text
+Assets/Zombie/Ch10_nonPBR.fbx filter=lfs diff=lfs merge=lfs -text
 *.psd filter=lfs diff=lfs merge=lfs -text
 *.fbx filter=lfs diff=lfs merge=lfs -text
 *.dylib filter=lfs diff=lfs merge=lfs -text

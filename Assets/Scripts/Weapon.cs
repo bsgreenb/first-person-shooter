@@ -109,7 +109,8 @@ public class Weapon : MonoBehaviour
     void Update()
     {
         if (isActiveWeapon) {
-
+            // To disable weapon clipping on active weapons
+            SetLayerRecursively(transform.gameObject, "WeaponRender");
             GetComponent<Outline>().enabled = false; // avoids a potential bug with remaining outline.
             if (bulletsLeft == 0 && isShooting) {
                 SoundManager.Instance.emptyMagazineSound1911.Play();
@@ -124,6 +125,27 @@ public class Weapon : MonoBehaviour
                 burstBulletsLeft = bulletsPerBurst;
                 FireWeapon();
             }
+        } else {
+            // Back to normal layer for these ones
+            SetLayerRecursively(transform.gameObject, "Default");
+        }
+    }
+
+    void SetLayerRecursively(GameObject obj, string layer) 
+    {
+        if (null == obj) {
+            return;
+        }
+    
+        int newLayer = LayerMask.NameToLayer(layer);
+
+        obj.layer = newLayer;
+    
+        foreach (Transform child in obj.transform) {
+            if (null == child) {
+                continue;
+            }
+            SetLayerRecursively(child.gameObject, layer);
         }
     }
 

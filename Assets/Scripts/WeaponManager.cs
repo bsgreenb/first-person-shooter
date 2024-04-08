@@ -128,6 +128,7 @@ public class WeaponManager : MonoBehaviour
 
         pickedupWeapon.transform.SetLocalPositionAndRotation(new Vector3(weapon.spawnPosition.x, weapon.spawnPosition.y, weapon.spawnPosition.z), Quaternion.Euler(weapon.spawnRotation.x, weapon.spawnRotation.y, weapon.spawnRotation.z));
         weapon.isActiveWeapon = true;
+        Debug.Log("HERE");
         weapon.GetComponent<Outline>().enabled = false;
         weapon.enabled = true;
         weapon.animator.enabled = true;
