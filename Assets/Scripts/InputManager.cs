@@ -50,4 +50,12 @@ public class InputManager : MonoBehaviour
     {
         onFoot.Disable();
     }
+
+    public void DisablePlayerInput()
+    {
+        // Disable all player controls
+        playerInput.OnFoot.Disable();
+        // Alternatively, to disable specific actions, you can do:
+        // playerInput.actions["YourActionName"].Disable();
+    }
 }
