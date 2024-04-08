@@ -96,7 +96,10 @@ public class Throwable : MonoBehaviour
                 rb.AddExplosionForce(explosionForce, transform.position, damageRadius);
             }
 
-            // Also apply damage to enemy over here
+            if (objectInRange.gameObject.GetComponent<Enemy>()) {
+                // In the future we will deal different damage, depending on the distance of the enemy from the explosion.
+                objectInRange.gameObject.GetComponent<Enemy>().TakeDamage(100);
+            }
         }
     }
 }

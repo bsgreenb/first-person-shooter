@@ -36,9 +36,9 @@ public class Bullet : MonoBehaviour
             // We will not destroy the bullet on impact, it will get destroyed according to its lifetime.
         }
 
-        if (objectWeHit.gameObject.CompareTag("Zombie"))
+        if (objectWeHit.gameObject.CompareTag("Enemy"))
         {
-            objectWeHit.gameObject.GetComponent<Zombie>().TakeDamage(bulletDamage);
+            objectWeHit.gameObject.GetComponent<Enemy>().TakeDamage(bulletDamage);
 
             Destroy(gameObject);
         }
