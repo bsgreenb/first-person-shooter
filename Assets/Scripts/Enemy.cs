@@ -32,7 +32,9 @@ public class Enemy : MonoBehaviour
             }
 
             isDead = true;
-
+            if (GetComponent<CapsuleCollider>()) {
+                GetComponent<CapsuleCollider>().enabled = false; // disable collider when they die, solves a bunch of bugs
+            }
             SoundManager.Instance.zombieChannel2.PlayOneShot(SoundManager.Instance.zombieDeath);
 
         } else {
@@ -48,9 +50,9 @@ public class Enemy : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, 2.5f); // Attack / Stop Attacking
 
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, 18f); // Detection (Start Chasing)
+        Gizmos.DrawWireSphere(transform.position, 100f); // Detection (Start Chasing)
 
         Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, 21f); // Stop Chasing
+        Gizmos.DrawWireSphere(transform.position, 101f); // Stop Chasing
    }
 }
