@@ -57,19 +57,6 @@ public class Bullet : MonoBehaviour
     {
         ContactPoint contact = objectWeHit.contacts[0];
 
-        GameObject hole = Instantiate(
-            GlobalReferences.Instance.bloodSprayEffect,
-            contact.point,
-            Quaternion.LookRotation(contact.normal)
-        );
-
-        hole.transform.SetParent(objectWeHit.gameObject.transform);
-    }
-
-    void CreateBulletImpactEffect(Collision objectWeHit)
-    {
-        ContactPoint contact = objectWeHit.contacts[0];
-
         GameObject bloodSprayPrefab = Instantiate(
             GlobalReferences.Instance.bloodSprayEffect,
             contact.point,
@@ -77,5 +64,18 @@ public class Bullet : MonoBehaviour
         );
 
         bloodSprayPrefab.transform.SetParent(objectWeHit.gameObject.transform);
+    }
+
+    void CreateBulletImpactEffect(Collision objectWeHit)
+    {
+        ContactPoint contact = objectWeHit.contacts[0];
+
+        GameObject hole = Instantiate(
+            GlobalReferences.Instance.bulletImpactEffectPrefab,
+            contact.point,
+            Quaternion.LookRotation(contact.normal)
+        );
+
+        hole.transform.SetParent(objectWeHit.gameObject.transform);
     }
 }
