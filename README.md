@@ -1,0 +1,1 @@
+[Download the game for Mac](https://drive.google.com/file/d/1jevX_yG-KUYZTjxyU8iIAcFmv47JoRg2/view?usp=drive_link)
