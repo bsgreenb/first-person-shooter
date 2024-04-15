@@ -71,7 +71,10 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(4f);
 
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true; 
         SceneManager.LoadScene("MainMenu");
+        
     }
 
     private IEnumerator BloodyScreenEffect()
